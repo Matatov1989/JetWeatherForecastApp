@@ -23,6 +23,7 @@ import com.example.jetweatherforecastapp.model.Weather
 import com.example.jetweatherforecastapp.model.WeatherItem
 import com.example.jetweatherforecastapp.screens.main.MainViewModel
 import com.example.jetweatherforecastapp.util.formatDate
+import com.example.jetweatherforecastapp.util.formatDateTime
 import com.example.jetweatherforecastapp.util.formatDecimals
 import com.example.jetweatherforecastapp.widgets.WeatherAppBar
 
@@ -107,6 +108,35 @@ fun MainContent(data: Weather) {
         }
         HumidityWindPressureRow(weather = data.list[0])
         Divider()
+        SunsetSunRiseRow(weather = data.list[0])
+    }
+}
+
+@Composable
+fun SunsetSunRiseRow(weather: WeatherItem) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 15.dp, bottom = 6.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row() {
+            Image(
+                painter = painterResource(id = R.drawable.sunrise),
+                contentDescription = "sunrise",
+                modifier = Modifier.size(30.dp)
+            )
+            Text(text = formatDateTime(weather.sunrise), style = MaterialTheme.typography.caption)
+        }
+        Row() {
+            Image(
+                painter = painterResource(id = R.drawable.sunset),
+                contentDescription = "sunset",
+                modifier = Modifier.size(30.dp)
+            )
+            Text(text = formatDateTime(weather.sunset), style = MaterialTheme.typography.caption)
+        }
     }
 }
 
