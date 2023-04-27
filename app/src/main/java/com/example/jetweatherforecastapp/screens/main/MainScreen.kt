@@ -3,7 +3,11 @@ package com.example.jetweatherforecastapp.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
@@ -109,6 +113,52 @@ fun MainContent(data: Weather) {
         HumidityWindPressureRow(weather = data.list[0])
         Divider()
         SunsetSunRiseRow(weather = data.list[0])
+        Text(
+            text = "This Week",
+            style = MaterialTheme.typography.subtitle1,
+            fontWeight = FontWeight.Bold
+        )
+
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            color = Color(0xFFEEF1EF),
+            shape = RoundedCornerShape(size = 14.dp)
+        ) {
+            LazyColumn(modifier = Modifier.padding(2.dp), contentPadding = PaddingValues(1.dp)) {
+                items(items = data.list) { item: WeatherItem ->
+                    //       Text(text = item.temp.max.toString())
+                    WeatherDetailRow(weather = item)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun WeatherDetailRow(weather: WeatherItem) {
+    val imageUrl = "https://openweathermap.org/img/wn/${weather.weather[0].icon}.png"
+
+    Surface(
+        modifier = Modifier
+            .padding(3.dp)
+            .fillMaxWidth(),
+        shape = CircleShape.copy(topEnd = CornerSize(6.dp)),
+        color = Color.White
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = formatDate(weather.dt).split(",")[0],
+                modifier = Modifier.padding(start = 5.dp)
+            )
+            WeatherStateImage(imageUrl = imageUrl)
+
+        }
     }
 }
 
