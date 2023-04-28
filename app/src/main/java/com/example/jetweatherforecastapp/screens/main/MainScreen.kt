@@ -41,7 +41,7 @@ fun MainScreen(navController: NavController, mainViewModel: MainViewModel = hilt
     val weatherData = produceState<DataOrException<Weather, Boolean, Exception>>(
         initialValue = DataOrException(loading = true)
     ) {
-        value = mainViewModel.getWeatherData(city = "Seattle")
+        value = mainViewModel.getWeatherData(city = "Haifa")
     }.value
 
     if (weatherData.loading == true) {
