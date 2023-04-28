@@ -1,12 +1,10 @@
 package com.example.jetweatherforecastapp.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -14,35 +12,30 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
-import com.example.jetweatherforecastapp.R
 import com.example.jetweatherforecastapp.data.DataOrException
 import com.example.jetweatherforecastapp.model.Weather
 import com.example.jetweatherforecastapp.model.WeatherItem
 import com.example.jetweatherforecastapp.navigation.WeatherScreens
 import com.example.jetweatherforecastapp.screens.main.MainViewModel
 import com.example.jetweatherforecastapp.util.formatDate
-import com.example.jetweatherforecastapp.util.formatDateTime
 import com.example.jetweatherforecastapp.util.formatDecimals
 import com.example.jetweatherforecastapp.widgets.*
 
 @Composable
-fun MainScreen(navController: NavController, mainViewModel: MainViewModel = hiltViewModel()) {
-
-
+fun MainScreen(
+    navController: NavController,
+    mainViewModel: MainViewModel = hiltViewModel(),
+    city: String?
+) {
     val weatherData = produceState<DataOrException<Weather, Boolean, Exception>>(
         initialValue = DataOrException(loading = true)
     ) {
-        value = mainViewModel.getWeatherData(city = "Haifa")
+        value = mainViewModel.getWeatherData(city = city.toString())
     }.value
 
     if (weatherData.loading == true) {
@@ -64,7 +57,6 @@ fun MainScaffold(weather: Weather, navController: NavController) {
             navController = navController,
             onAddActionClicked = {
                 navController.navigate(WeatherScreens.SearchScreen.name)
-
             },
             elevation = 5.dp
         ) {
@@ -103,8 +95,6 @@ fun MainContent(data: Weather) {
                 .padding(4.dp)
                 .size(200.dp), shape = CircleShape, color = Color(0xFFFFC400)
         ) {
-
-
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally

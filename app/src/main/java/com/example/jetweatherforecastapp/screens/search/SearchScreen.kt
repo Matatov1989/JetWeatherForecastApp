@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.jetweatherforecastapp.navigation.WeatherScreens
 import com.example.jetweatherforecastapp.widgets.WeatherAppBar
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -45,18 +46,21 @@ fun SearchScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-
+                SearchBar(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .align(Alignment.CenterHorizontally)) { mCity ->
+                    navController.navigate("${WeatherScreens.MainScreen.name}/$mCity")
+                }
             }
-
         }
     }
-
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SearchBar(onSearch: (String) -> Unit = {}) {
+fun SearchBar(modifier: Modifier = Modifier, onSearch: (String) -> Unit = {}) {
     val searchQueryState = rememberSaveable { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
     val valid = remember(searchQueryState.value) { searchQueryState.value.trim().isNotEmpty() }
@@ -66,9 +70,11 @@ fun SearchBar(onSearch: (String) -> Unit = {}) {
             valueState = searchQueryState,
             placeholder = "Seatle",
             onAction = KeyboardActions {
-
+                if (!valid) return@KeyboardActions
+                onSearch(searchQueryState.value.trim())
+                searchQueryState.value = ""
+                keyboardController?.hide()
             })
-
     }
 }
 
@@ -80,7 +86,6 @@ fun CommonTextField(
     imeActions: ImeAction = ImeAction.Next,
     onAction: KeyboardActions = KeyboardActions.Default
 ) {
-
     OutlinedTextField(
         value = valueState.value,
         onValueChange = { valueState.value = it },
@@ -98,5 +103,4 @@ fun CommonTextField(
             .fillMaxWidth()
             .padding(start = 10.dp, end = 10.dp)
     )
-
 }
