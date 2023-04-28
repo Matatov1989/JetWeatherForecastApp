@@ -28,6 +28,7 @@ import com.example.jetweatherforecastapp.R
 import com.example.jetweatherforecastapp.data.DataOrException
 import com.example.jetweatherforecastapp.model.Weather
 import com.example.jetweatherforecastapp.model.WeatherItem
+import com.example.jetweatherforecastapp.navigation.WeatherScreens
 import com.example.jetweatherforecastapp.screens.main.MainViewModel
 import com.example.jetweatherforecastapp.util.formatDate
 import com.example.jetweatherforecastapp.util.formatDateTime
@@ -61,6 +62,10 @@ fun MainScaffold(weather: Weather, navController: NavController) {
             title = "${weather.city.name}, ${weather.city.country}",
             //      icon = Icons.Default.ArrowBack,
             navController = navController,
+            onAddActionClicked = {
+                navController.navigate(WeatherScreens.SearchScreen.name)
+
+            },
             elevation = 5.dp
         ) {
 
