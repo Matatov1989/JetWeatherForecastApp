@@ -1,5 +1,6 @@
 package com.example.jetweatherforecastapp.widgets
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -27,6 +28,7 @@ import com.example.jetweatherforecastapp.model.Favorite
 import com.example.jetweatherforecastapp.navigation.WeatherScreens
 import com.example.jetweatherforecastapp.screens.favorires.FavoriteViewModel
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun WeatherAppBar(
     title: String = "Title",
@@ -116,7 +118,7 @@ fun WeatherAppBar(
                     )
                 } else {
                     showIt.value = false
-                        Box {}
+                    Box {}
                 }
 
                 ShowToast(context = context, showIt)
