@@ -2,12 +2,11 @@ package com.example.jetweatherforecastapp.screens.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.jetweatherforecastapp.model.Favorite
+import com.example.jetweatherforecastapp.model.Unit
 import com.example.jetweatherforecastapp.repository.WeatherDbRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject

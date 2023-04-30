@@ -2,6 +2,7 @@ package com.example.jetweatherforecastapp.repository
 
 import com.example.jetweatherforecastapp.data.WeatherDao
 import com.example.jetweatherforecastapp.model.Favorite
+import com.example.jetweatherforecastapp.model.Unit
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
