@@ -36,7 +36,7 @@ fun MainScreen(
     val curCity: String = if (city!!.isBlank()) "Tel Aviv" else city
     val unitFromDB = settingsViewModel.unitList.collectAsState().value
     var unit by remember {
-        mutableStateOf("imperial")
+        mutableStateOf("metric")
     }
     var isImperial by remember {
         mutableStateOf(false)
@@ -44,24 +44,23 @@ fun MainScreen(
 
     if (!unitFromDB.isNullOrEmpty()) {
         unit = unitFromDB[0].unit.split(" ")[0].lowercase()
-        isImperial = unit == "imperial"
+        isImperial = unit == "metric"
 
-        val weatherData = produceState<DataOrException<Weather, Boolean, Exception>>(
-            initialValue = DataOrException(loading = true)
-        ) {
-            value = mainViewModel.getWeatherData(city = curCity,
-            units = unit
-            )
-        }.value
-
-        if (weatherData.loading == true) {
-            CircularProgressIndicator()
-        } else if (weatherData.data != null) {
-            MainScaffold(weather = weatherData.data!!, navController = navController, isImperial = isImperial)
-        }
+    } else {
+        isImperial = unit == "metric"
     }
 
+    val weatherData = produceState<DataOrException<Weather, Boolean, Exception>>(
+        initialValue = DataOrException(loading = true)
+    ) {
+        value = mainViewModel.getWeatherData(city = curCity, units = unit)
+    }.value
 
+    if (weatherData.loading == true) {
+        CircularProgressIndicator()
+    } else if (weatherData.data != null) {
+        MainScaffold(weather = weatherData.data!!, navController = navController, isImperial = isImperial)
+    }
 }
 
 
