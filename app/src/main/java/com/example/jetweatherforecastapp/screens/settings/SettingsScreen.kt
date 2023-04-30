@@ -25,7 +25,7 @@ import com.example.jetweatherforecastapp.widgets.WeatherAppBar
 @Composable
 fun SettingsScreen(
     navController: NavController,
-    settingsViewModel: SettingsViewMode = hiltViewModel()
+    settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
 
     var unitToggleState by remember {

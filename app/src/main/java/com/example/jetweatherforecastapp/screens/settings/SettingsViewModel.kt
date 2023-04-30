@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jetweatherforecastapp.model.Unit
 import com.example.jetweatherforecastapp.repository.WeatherDbRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,7 +12,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SettingsViewMode  @Inject constructor(private val repository: WeatherDbRepository) :
+@HiltViewModel
+class SettingsViewModel @Inject constructor(private val repository: WeatherDbRepository) :
     ViewModel() {
 
     private val _unitList = MutableStateFlow<List<Unit>>(emptyList())
